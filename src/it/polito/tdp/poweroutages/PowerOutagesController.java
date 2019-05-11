@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import it.polito.tdp.poweroutages.model.Model;
 import it.polito.tdp.poweroutages.model.Nerc;
+import it.polito.tdp.poweroutages.model.PowOutages;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -43,6 +44,17 @@ public class PowerOutagesController {
     	int years = Integer.parseInt(txtYears.getText());
     	int hours = Integer.parseInt(txtHours.getText());
     	Nerc nerc = boxNerc.getValue();
+    	
+    	List<PowOutages> poList = model.faiAnalisi(nerc, years, hours);
+    	int sommaCust = 0;
+    	
+    	for(PowOutages po : poList) {
+    		System.out.println(po.toString());
+    		txtResult.appendText(po.toString()+"\n");
+    		sommaCust = po.getCustomer() + sommaCust;
+    	}
+    	txtResult.appendText(sommaCust + "\n");
+    	
     }
 
     @FXML
